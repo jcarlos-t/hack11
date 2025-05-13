@@ -18,6 +18,7 @@ public class OrderCreatedEvent extends ApplicationEvent {
         this.cantidad = cantidad;
     }
 
+
     public String getOrderId() {
         return orderId;
     }
