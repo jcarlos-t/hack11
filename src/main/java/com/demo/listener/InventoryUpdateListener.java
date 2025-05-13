@@ -20,29 +20,29 @@ public class InventoryUpdateListener {
     private final Map<String, Integer> inventario = new ConcurrentHashMap<>();
 
     @PostConstruct
-    public void init() {
-        // Inicializamos el inventario simulado
+    public void initInventario() {
         inventario.put("Café", 10);
-        inventario.put("Azúcar", 20);
-        inventario.put("Pan", 15);
+        inventario.put("Azúcar", 15);
         inventario.put("Leche", 8);
-
-        logger.info("Inventario inicial cargado: {}", inventario);
+        logger.info("Inventario inicializado: {}", inventario);
     }
 
     @Async
     @EventListener
     public void handleOrderCreated(OrderCreatedEvent event) {
         List<String> productos = event.getProductos();
+        List<Integer> cantidades = event.getCantidad();
 
-        for (String producto : productos) {
+        for (int i = 0; i < productos.size(); i++) {
+            String producto = productos.get(i);
+            int cantidad = cantidades.get(i);
+
             inventario.computeIfPresent(producto, (key, stockActual) -> {
-                int nuevoStock = stockActual - 1;
-                logger.info("Producto '{}' vendido. Stock: {} → {}", key, stockActual, nuevoStock);
-                return Math.max(nuevoStock, 0);
+                int nuevoStock = stockActual - cantidad;
+                logger.info("Producto '{}' vendido ({} unidades). Stock: {} → {}", key, cantidad, stockActual, nuevoStock);
+                return Math.max(nuevoStock, 0); // Evita que el stock sea negativo
             });
 
-            // Si el producto no existe en el inventario
             inventario.computeIfAbsent(producto, p -> {
                 logger.warn("❗Producto '{}' no está registrado en el inventario. No se pudo actualizar.", p);
                 return 0;

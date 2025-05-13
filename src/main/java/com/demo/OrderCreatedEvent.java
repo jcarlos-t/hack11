@@ -8,12 +8,14 @@ public class OrderCreatedEvent extends ApplicationEvent {
     private final String orderId;
     private final String email;
     private final List<String> productos;
+    private final List<Integer> cantidad;
 
-    public OrderCreatedEvent(Object source, String orderId, String email, List<String> productos) {
+    public OrderCreatedEvent(Object source, String orderId, String email, List<String> productos, List<Integer> cantidad) {
         super(source);
         this.orderId = orderId;
         this.email = email;
         this.productos = productos;
+        this.cantidad = cantidad;
     }
 
     public String getOrderId() {
@@ -26,5 +28,9 @@ public class OrderCreatedEvent extends ApplicationEvent {
 
     public List<String> getProductos() {
         return productos;
+    }
+
+    public List<Integer> getCantidad() {
+        return cantidad;
     }
 }

@@ -1,6 +1,5 @@
 package com.demo.controller;
 
-
 import com.demo.OrderCreatedEvent;
 import com.demo.dto.OrderRequestDTO;
 import org.springframework.context.ApplicationEventPublisher;
@@ -21,7 +20,14 @@ public class ControllerOrder {
 
     @PostMapping
     public ResponseEntity<String> createOrder(@RequestBody OrderRequestDTO request) {
-        publisher.publishEvent(new OrderCreatedEvent(this, request.getOrderId(), request.getEmail(), request.getProductos()));
-        return ResponseEntity.ok("Pedido creado y evento publicado.");
+        publisher.publishEvent(new OrderCreatedEvent(
+                this,
+                request.getOrderId(),
+                request.getEmail(),
+                request.getProductos(),
+                request.getCantidad()
+        ));
+        return ResponseEntity.ok("Pedido recibido y evento publicado.");
     }
+
 }

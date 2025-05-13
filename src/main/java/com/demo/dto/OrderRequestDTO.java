@@ -8,8 +8,13 @@ public class OrderRequestDTO {
     private String orderId;
     private String email;
     private List<String> productos;
+    private List<Integer> cantidad;
+
     public String getOrderId() {
         return orderId;
+    }
+    public List<Integer> getCantidad() {
+        return cantidad;
     }
 
     public String getEmail() {
