@@ -22,6 +22,6 @@ public class ControllerOrder {
     @PostMapping
     public ResponseEntity<String> createOrder(@RequestBody OrderRequestDTO request) {
         publisher.publishEvent(new OrderCreatedEvent(this, request.getOrderId(), request.getEmail(), request.getProductos()));
-        return ResponseEntity.ok("✅ Pedido creado y evento publicado.");
+        return ResponseEntity.ok("Pedido creado y evento publicado.");
     }
 }
